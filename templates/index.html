@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+{% load static %}
+<!-- pip install django-->
+<!-- pip install mysqlclient-->
+
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Comisiones de Arte Personalizadas</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'estilos/index.css' %}"></head>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="#">LOGOTIPO</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="container">
+      <h1 class="display-4">Comisiones de Arte Personalizadas</h1>
+      <p class="lead">Ilustraciones hechas a mano con amor. Tú imaginas, yo lo dibujo.</p>
+      <a href="#comisiones" class="btn btn-primary mt-3">Solicita tu comisión</a>
+    </div>
+  </section>
+
+  <section class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-4">Galería de Trabajos</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card">
+            <img src="https://via.placeholder.com/400x300" class="card-img-top" alt="Ejemplo 1">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <img src="https://via.placeholder.com/400x300" class="card-img-top" alt="Ejemplo 2">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <img src="https://via.placeholder.com/400x300" class="card-img-top" alt="Ejemplo 3">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="comisiones" class="py-5 bg-light">
+    <div class="container">
+      <h2 class="text-center mb-4">Precios y Tipos de Comisiones</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card p-4 text-center">
+            <h5>Retrato Digital</h5>
+            <p>$30 USD</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card p-4 text-center">
+            <h5>Ilustración Completa</h5>
+            <p>$50 USD</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card p-4 text-center">
+            <h5>Diseño de Personaje</h5>
+            <p>$40 USD</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-4">Solicita tu Comisión</h2>
+      <form class="row g-3">
+        <div class="col-md-6">
+          <input type="text" class="form-control" placeholder="Nombre" required>
+        </div>
+        <div class="col-md-6">
+          <input type="email" class="form-control" placeholder="Correo electrónico" required>
+        </div>
+        <div class="col-12">
+          <textarea class="form-control" rows="5" placeholder="Describe tu idea..." required></textarea>
+        </div>
+        <div class="col-12 text-center">
+          <button type="submit" class="btn btn-primary px-5">Enviar</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 nombre artista - Todos los derechos reservados</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

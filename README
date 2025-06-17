@@ -1,0 +1,13 @@
+Proyecto web para artista digital
+
+Este proyecto esta iniciado en Django, para iniciar tener instalado:
+django-mysqlclient
+
+instrucciones:
+
+pip install django
+pip install mysqlclient
+
+iniciar xampp msql apache
+
+py manage.py runserver
