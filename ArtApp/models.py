@@ -7,7 +7,7 @@ class SolicitudComision(models.Model):
         ('Cuerpo completo', 'Cuerpo completo'),
         ('Diseño de personaje', 'Diseño de personaje'),
         ('Pareja', 'Pareja / Duo'),
-        ('NSFW', 'NSFW Personalizado'),
+
     ]
 
     nombre = models.CharField(max_length=50)
@@ -21,3 +21,4 @@ class SolicitudComision(models.Model):
         return self.nombre
     class Meta:
         db_table = 'artapp_solicitudcomision'
+

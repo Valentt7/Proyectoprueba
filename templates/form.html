@@ -10,6 +10,14 @@
   <link rel="stylesheet" href="{% static 'estilos/form.css' %}">
 </head>
 <body>
+  <nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+        Bootstrap
+      </a>
+    </div>
+  </nav>
   <div class="container">
     <div class="form-container">
         <h2 class="form-title">
@@ -89,9 +97,6 @@
                 <button type="submit" class="btn btn-custom">
                     <i class="fas fa-paper-plane"></i> Enviar Solicitud
                 </button>
-                <a href="{% url 'administracion' %}" class="btn btn-outline-secondary">
-                    <i class="fas fa-list"></i> Ver Solicitudes
-                </a>
             </div>
         </form>
     </div>

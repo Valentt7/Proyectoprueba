@@ -134,6 +134,8 @@ body {
   transition: var(--transition);
   position: relative;
   overflow: hidden;
+	justify-content: center;
+	align-items: center;
 }
 
 .package-card::before {
