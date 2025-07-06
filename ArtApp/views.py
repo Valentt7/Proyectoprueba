@@ -14,7 +14,7 @@ def form(request):
                 # Guardar en la base de datos MySQL
                 solicitud = form.save()
                 messages.success(request, f'¡Solicitud enviada exitosamente! ID: {solicitud.id}')
-                return redirect('form')  # Redirigir para evitar reenvío
+                return redirect('form') 
             except Exception as e:
                 messages.error(request, f'Error al guardar la solicitud: {str(e)}')
         else:
@@ -24,7 +24,7 @@ def form(request):
     
     return render(request, 'form.html', {'form': form})
 
-def listar_solicitudes(request):
+def administracion(request):
     solicitudes = SolicitudComision.objects.all().order_by('-fecha_creacion')
     return render(request, 'admin.html', {'solicitudes': solicitudes})
 

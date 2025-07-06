@@ -18,7 +18,8 @@ from django.contrib import admin
 from django.urls import path
 from ArtApp import views
 urlpatterns = [
+    path('admin/', admin.site.urls),  # Panel de administración de Django
     path('', views.index, name='index'),
-    path('solicitud/', views.form, name='form'),
-    path('solicitudes/', views.listar_solicitudes, name='listar_solicitudes'),
+    path('form/', views.form, name='form'),
+    path('administracion/', views.administracion, name='administracion'),  # Cambia el nombre de la vista y el name
 ]
