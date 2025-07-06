@@ -19,4 +19,6 @@ from django.urls import path
 from ArtApp import views
 urlpatterns = [
     path('', views.index, name='index'),
+    path('solicitud/', views.form, name='form'),
+    path('solicitudes/', views.listar_solicitudes, name='listar_solicitudes'),
 ]
