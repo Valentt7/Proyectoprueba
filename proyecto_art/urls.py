@@ -21,5 +21,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),  # Panel de administración de Django
     path('', views.index, name='index'),
     path('form/', views.form, name='form'),
+    path('login', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
+    path('actualizar-estado/<int:solicitud_id>/', views.actualizar_estado, name='actualizar_estado'),
     path('administracion/', views.administracion, name='administracion'),  # Cambia el nombre de la vista y el name
 ]

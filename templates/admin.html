@@ -6,71 +6,185 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Solicitudes</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container mt-4">
-        <h2 class="mb-4">
-            <i class="fas fa-list"></i> Lista de Solicitudes de Comisión
-        </h2>
-        
-        <a href="{% url 'form' %}" class="btn btn-primary mb-3">
-            <i class="fas fa-plus"></i> Nueva Solicitud
-        </a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-palette"></i> Comisiones de Arte
+            </a>
+                    <div class="navbar-nav ms-auto">
+                        <span class="navbar-text me-3">
+                            <i class="fas fa-user-shield"></i> Admin: {{ user.username }}
+                        </span>
+                        <a class="nav-link" href="{% url 'logout' %}">
+                            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                        </a>
+                    </div>
+        </div>
+    </nav>
 
-        {% if solicitudes %}
-            <div class="table-responsive">
-                <table class="table table-striped table-hover">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Email</th>
-                            <th>Tipo</th>
-                            <th>Descripción</th>
-                            <th>Referencias</th>
-                            <th>Fecha</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for solicitud in solicitudes %}
-                            <tr>
-                                <td>{{ solicitud.id }}</td>
-                                <td>{{ solicitud.nombre }}</td>
-                                <td>{{ solicitud.email }}</td>
-                                <td>
-                                    <span class="badge bg-info">{{ solicitud.tipo }}</span>
-                                </td>
-                                <td>
-                                    {% if solicitud.descripcion %}
-                                        {{ solicitud.descripcion|truncatewords:10 }}
-                                    {% else %}
-                                        <span class="text-muted">Sin descripción</span>
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    {% if solicitud.referencias %}
-                                        <a href="{{ solicitud.referencias }}" target="_blank" class="btn btn-sm btn-outline-primary">
-                                            <i class="fas fa-external-link-alt"></i> Ver
-                                        </a>
-                                    {% else %}
-                                        <span class="text-muted">Sin referencias</span>
-                                    {% endif %}
-                                </td>
-                                <td>{{ solicitud.fecha_creacion|date:"d/m/Y H:i" }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2><i class="fas fa-list"></i> Todas las Solicitudes de Comisión</h2>
+                    <div class="text-muted mb-3">Panel de administración</div>
+                    <a href="{% url 'form' %}" class="btn btn-success me-2">
+                        <i class="fas fa-plus"></i> Nueva Solicitud
+                    </a>
+                    <a href="{% url 'form' %}" class="btn btn-outline-secondary">
+                        <i class="fas fa-eye"></i> Ver Sitio Público
+                    </a>
+                </div>
+                
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="fas fa-check-circle"></i> {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                {% if solicitudes %}
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Email</th>
+                                    <th>Tipo</th>
+                                    <th>Estado</th>
+                                    <th>Descripción</th>
+                                    <th>Referencias</th>
+                                    <th>Fecha</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for solicitud in solicitudes %}
+                                    <tr>
+                                        <td>{{ solicitud.id }}</td>
+                                        <td>{{ solicitud.nombre }}</td>
+                                        <td>{{ solicitud.email }}</td>
+                                        <td>
+                                            <span class="badge bg-info">{{ solicitud.tipo }}</span>
+                                        </td>
+                                        <td>
+                                            {% if solicitud.estado == 'pendiente' %}
+                                                <span class="badge bg-warning">Pendiente</span>
+                                            {% elif solicitud.estado == 'aceptado' %}
+                                                <span class="badge bg-success">Aceptado</span>
+                                            {% elif solicitud.estado == 'en_proceso' %}
+                                                <span class="badge bg-primary">En Proceso</span>
+                                            {% elif solicitud.estado == 'completado' %}
+                                                <span class="badge bg-success">Completado</span>
+                                            {% elif solicitud.estado == 'no_aceptado' %}
+                                                <span class="badge bg-danger">No Aceptado</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if solicitud.descripcion %}
+                                                <span data-bs-toggle="tooltip" title="{{ solicitud.descripcion }}">
+                                                    {{ solicitud.descripcion|truncatewords:5 }}
+                                                </span>
+                                            {% else %}
+                                                <span class="text-muted">Sin descripción</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if solicitud.referencias %}
+                                                <a href="{{ solicitud.referencias }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                                    <i class="fas fa-external-link-alt"></i> Ver
+                                                </a>
+                                            {% else %}
+                                                <span class="text-muted">Sin referencias</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ solicitud.fecha_creacion|date:"d/m/Y H:i" }}</td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                                                    <i class="fas fa-cog"></i>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><h6 class="dropdown-header">Cambiar Estado</h6></li>
+                                                    <li>
+                                                        <form method="post" action="{% url 'actualizar_estado' solicitud.id %}" class="d-inline">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="estado" value="pendiente">
+                                                            <button type="submit" class="dropdown-item">
+                                                                <i class="fas fa-clock text-warning"></i> Pendiente
+                                                            </button>
+                                                        </form>
+                                                    </li>
+                                                    <li>
+                                                        <form method="post" action="{% url 'actualizar_estado' solicitud.id %}" class="d-inline">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="estado" value="aceptado">
+                                                            <button type="submit" class="dropdown-item">
+                                                                <i class="fas fa-check text-success"></i> Aceptado
+                                                            </button>
+                                                        </form>
+                                                    </li>
+                                                    <li>
+                                                        <form method="post" action="{% url 'actualizar_estado' solicitud.id %}" class="d-inline">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="estado" value="en_proceso">
+                                                            <button type="submit" class="dropdown-item">
+                                                                <i class="fas fa-spinner text-primary"></i> En Proceso
+                                                            </button>
+                                                        </form>
+                                                    </li>
+                                                    <li>
+                                                        <form method="post" action="{% url 'actualizar_estado' solicitud.id %}" class="d-inline">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="estado" value="completado">
+                                                            <button type="submit" class="dropdown-item">
+                                                                <i class="fas fa-check-circle text-success"></i> Completado
+                                                            </button>
+                                                        </form>
+                                                    </li>
+                                                    <li>
+                                                        <form method="post" action="{% url 'actualizar_estado' solicitud.id %}" class="d-inline">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="estado" value="no_aceptado">
+                                                            <button type="submit" class="dropdown-item">
+                                                                <i class="fas fa-times text-danger"></i> No Aceptado
+                                                            </button>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info text-center">
+                        <i class="fas fa-info-circle"></i> No hay solicitudes registradas.
+                        <br>
+                        <a href="{% url 'form' %}" class="btn btn-primary mt-2">
+                            <i class="fas fa-plus"></i> Crear Primera Solicitud
+                        </a>
+                    </div>
+                {% endif %}
             </div>
-        {% else %}
-            <div class="alert alert-info">
-                <i class="fas fa-info-circle"></i> No hay solicitudes registradas.
-            </div>
-        {% endif %}
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js"></script>
+    <script>
+        // Inicializar tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
 </body>
-
 </html>
